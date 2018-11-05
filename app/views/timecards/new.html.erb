@@ -1,0 +1,33 @@
+<div class="main users-new">
+  <div class="container">
+    <div class="form-heading">打刻</div>
+    <div class="timecard users-form">
+      <div class="form-body">
+        <% if @error_message %>
+          <div class="form-error">
+            <%= @error_message %>
+          </div>
+        <% end %>
+        
+        <h1><%= Time.now.strftime("%Y/%m/%d %H:%M") %></h1>
+        
+        <div class="center">
+
+        <div class="inline-block">
+        <%= form_tag("/timecards/create_start") do %>
+        <input type="submit" value="出勤">
+        <% end %>
+        </div>
+
+        <div class="inline-block">
+        <%= form_tag("/timecards/create_end") do %>
+        <input type="submit" value="退勤">
+        <% end %>
+        </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

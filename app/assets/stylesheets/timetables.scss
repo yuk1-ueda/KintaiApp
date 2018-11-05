@@ -1,0 +1,108 @@
+// Place all the styles related to the timetables controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+/* posts/index ================================ */
+.timetable {
+    padding: 24px 16px;
+    background-color: white;
+    overflow: hidden;
+    box-shadow: 0 2px 6px #c1ced7;
+    text-align: center;
+    border-radius: 0px;
+  }
+  
+  table {
+    width: 100%;
+  }
+
+  th {
+    width: 16%;
+  }
+
+  .timetable input[type="submit"] {
+    background-color: #286aa4;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 300;
+    width: 120px;
+    height: 40px;
+    border-radius: 4px;
+    margin-top: 0px;
+    margin-bottom: 0;
+  }  
+
+
+  /* posts/show ================================ */
+  .posts-show form {
+    display: inline;
+  }
+  
+  .posts-show-item {
+    padding: 30px;
+    background-color: white;
+    box-shadow: 0 2px 6px #c1ced7;
+    overflow: hidden;
+  }
+  
+  .posts-show-item img {
+    width: 60px;
+    height: 60px;
+    border-radius: 40%;
+    box-shadow: 0 2px 6px #c1ced7;
+    vertical-align: middle;
+    object-fit: cover;
+  }
+  
+  .posts-show-item .post-user-name a {
+    vertical-align: middle;
+    font-size: 24px;
+    margin-left: 15px;
+  }
+  
+  .posts-show-item p {
+    font-size: 24px;
+    margin: 20px 0;
+  }
+  
+  .post-time {
+    color: #8899a6;
+    margin-bottom: 10px;
+  }
+  
+  .like-btn {
+    color: #8899a6;
+  }
+  
+  .like-btn-unlike {
+    color: #ff2581;
+  }
+  
+  .posts-show-item .fa {
+    font-size: 16px;
+    margin-right: 3px;
+  }
+  
+  .post-menus {
+    float: right;
+  }
+  
+  .post-menus a, .post-menus input {
+    color: #8899a6;
+    text-decoration: underline;
+    font-size: 14px;
+  }
+  
+  /* posts/new ================================ */
+  .posts-new textarea {
+    font-size: 20px;
+    padding: 10px;
+    min-height: 140px;
+    border: 1px solid rgb(216, 218, 223);
+    resize: none;
+  }
+  
+  .posts-new textarea::-webkit-input-placeholder {
+    font-size: 24px;
+    opacity: 0.5;
+  }
