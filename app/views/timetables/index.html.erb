@@ -1,0 +1,64 @@
+<div class="main posts-index">
+    <div class="container">
+
+        <!-- 表示年月 -->
+        <div class="form-heading">
+            <%= Date.parse(@date).year %>/<%= Date.parse(@date).month %>
+        </div>
+
+        <!-- 勤怠表検索（セレクトボックス） -->
+        <div class="timetable">
+            <div class="timetable_search">
+                <%= form_tag("/timetable/search_table") do %>
+                    <%= select_tag "year", options_for_select([["2018", "2018"],["2019","2019"]]) %>
+                    <%= select_tag "month", options_for_select([["1", "1"],["2","2"], ["3","3"], ["4","4"], ["5","5"], ["6","6"], ["7","7"], ["8","8"], ["9","9"], ["10","10"], ["11","11"], ["12","12"]]) %>
+                    <input type="submit" value="表示">
+                <% end %>
+            </div> 
+        </div>
+
+        <!-- 勤怠表 -->
+        <div class="timetable">
+            <table>
+                <tr>
+                    <th>日付</th>
+                    <th>出勤</th>
+                    <th>退勤</th>
+                    <th>労働時間</th>
+                    <th>休憩時間</th>
+                    <th>残業時間</th>
+                </tr>
+                <% @timetables.each do |time,value| %>
+                <tr>
+                    <td><%= time.strftime("%m/%d") %></td>
+                    <td><% if value[:startofwork] %><%= value[:startofwork].strftime("%H:%M") %><% else %><%= nil %><% end %></td>
+                    <td><% if value[:endofwork] %><%= value[:endofwork].strftime("%H:%M") %><% else %><%= nil %><% end %></td>
+                    <td><% if value[:worktime] %><%= "#{value[:worktime].floor(2).to_f}h" %><% else %><%= nil %><% end %></td>
+                    <td><% if value[:breaktime] %><%= "#{value[:breaktime]}h" %><% else %><%= nil %><% end %></td>
+                    <td><% if value[:overtime] && value[:worktime] %><%= "#{value[:overtime].floor(2).to_f}h" %><% else %><%= nil %><% end %></td>
+                </tr>
+                <% end %>
+            </table>
+        </div>
+
+        <!-- 合計時間 -->
+        <div class="timetable">
+            <table>
+                <tr>
+                    <th>合計労働時間</th>
+                    <th>合計残業時間</th>
+                </tr>
+                <tr>
+                    <td><%= "#{@total_worktime.floor(2).to_f}h" %></td>
+                    <td><%= "#{@total_overtime.floor(2).to_f}h" %></td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="timetable">
+            <div class="csv_btn">
+                <%= link_to "CSV出力", timetable_path(format: :csv, date: params[:date]) %>
+            </div>
+        </div>
+    </div>
+</div>
