@@ -8,25 +8,19 @@
             <%= @error_message %>
           </div>
         <% end %>
-        
         <h1><%= Time.now.strftime("%Y/%m/%d %H:%M") %></h1>
-        
         <div class="center">
-
-        <div class="inline-block">
-        <%= form_tag("/timecards/create_start") do %>
-        <input type="submit" value="出勤">
-        <% end %>
+          <div class="inline-block">
+            <%= form_tag("/timecards/create_start") do %>
+              <input type="submit" value="出勤">
+            <% end %>
+          </div>
+          <div class="inline-block">
+            <%= form_tag("/timecards/create_end") do %>
+              <input type="submit" value="退勤">
+            <% end %>
+          </div>
         </div>
-
-        <div class="inline-block">
-        <%= form_tag("/timecards/create_end") do %>
-        <input type="submit" value="退勤">
-        <% end %>
-        </div>
-
-        </div>
-
       </div>
     </div>
   </div>

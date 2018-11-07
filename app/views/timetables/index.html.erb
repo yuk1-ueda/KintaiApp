@@ -1,41 +1,58 @@
 <div class="main posts-index">
-  <div class="container">
-  <div class="form-heading"><%= Time.now.year %>/<%= Time.now.month %></div>
-    <div class="timetable">
-        <table>
-            <tr>
-                <th>日付</th>
-                <th>出勤時間</th>
-                <th>退勤時間</th>
-                <th>労働時間</th>
-                <th>休憩時間</th>
-                <th>残業時間</th>
-            </tr>
-            <% sum_overtime = 0 %>
-            <% (Date.parse("2018-11-01")..Date.parse("2018-11-30")).each do |time| %>
-            <tr>
-                <td><%= time.strftime("%m/%d") %></td>
+    <div class="container">
 
-                <% @startofwork = Timecard.find_by(user_id: @current_user.id, startofwork: time.beginning_of_day...time.end_of_day ).try(:startofwork) %>
-                <% @endofwork = Timecard.find_by(user_id: @current_user.id, endofwork: time.beginning_of_day...time.end_of_day ).try(:endofwork) %>
-                <% if @startofwork && @endofwork %><% @gaptime = TimeDifference.between(@startofwork, @endofwork).in_hours %><% else %><% @gaptime = nil %><% end %>
-                <% if @gaptime && @gaptime >= 5 && @gaptime < 10 %><% @breaktime = 1 %><% elsif @gaptime && @gaptime >= 10 %><% @breaktime = 2 %><% elsif @gaptime && @gaptime < 5 %><% @breaktime = 0 %><% else %><% @breaktime = nil %><% end %>
-                <% if @gaptime && @breaktime %><% @worktime = @gaptime - @breaktime %><% else %><% @worktime = nil %><% end %>
-                <% if @worktime && @worktime > 8 %><% @overtime = @worktime - 8 %><% else %><% @overtime = 0 %><% end %>
+        <!-- 表示年月 -->
+        <div class="form-heading">
+            <%= Date.parse(@date).year %>/<%= Date.parse(@date).month %>
+        </div>
 
-                <td><% if @startofwork %><%= @startofwork.strftime("%H:%M") %><% else %><%= nil %><% end %></td>
-                <td><% if @endofwork %><%= @endofwork.strftime("%H:%M") %><% else %><%= nil %><% end %></td>
-                <td><% if @worktime %><%= "#{@worktime}h" %><% else %><%= nil %><% end %></td>
-                <td><% if @breaktime %><%= "#{@breaktime}h" %><% else %><%= nil %><% end %></td>
-                <td><% if @overtime && @worktime %><%= "#{@overtime}h" %><% end %></td>
-                <% sum_overtime += @overtime if @overtime && @worktime %>
-            </tr>
-           <% end %>
-           <%= sum_overtime %>
-        </table>
+        <!-- 勤怠表検索（セレクトボックス） -->
+        <div class="timetable">
+            <div class="timetable_search">
+                <%= form_tag("/timetable/search_table") do %>
+                    <%= select_tag "year", options_for_select([["2018", "2018"],["2019","2019"]]) %>
+                    <%= select_tag "month", options_for_select([["1", "1"],["2","2"], ["3","3"], ["4","4"], ["5","5"], ["6","6"], ["7","7"], ["8","8"], ["9","9"], ["10","10"], ["11","11"], ["12","12"]]) %>
+                    <input type="submit" value="表示">
+                <% end %>
+            </div> 
+        </div>
+
+        <!-- 勤怠表 -->
+        <div class="timetable">
+            <table>
+                <tr>
+                    <th>日付</th>
+                    <th>出勤</th>
+                    <th>退勤</th>
+                    <th>労働時間</th>
+                    <th>休憩時間</th>
+                    <th>残業時間</th>
+                </tr>
+                <% @timetables.each do |time,value| %>
+                <tr>
+                    <td><%= time.strftime("%m/%d") %></td>
+                    <td><% if value[:startofwork] %><%= value[:startofwork].strftime("%H:%M") %><% else %><%= nil %><% end %></td>
+                    <td><% if value[:endofwork] %><%= value[:endofwork].strftime("%H:%M") %><% else %><%= nil %><% end %></td>
+                    <td><% if value[:worktime] %><%= "#{value[:worktime].floor(2).to_f}h" %><% else %><%= nil %><% end %></td>
+                    <td><% if value[:breaktime] %><%= "#{value[:breaktime]}h" %><% else %><%= nil %><% end %></td>
+                    <td><% if value[:overtime] && value[:worktime] %><%= "#{value[:overtime].floor(2).to_f}h" %><% end %></td>
+                </tr>
+                <% end %>
+            </table>
+        </div>
+
+        <!-- 合計時間 -->
+        <div class="timetable">
+            <table>
+                <tr>
+                    <th>合計労働時間</th>
+                    <th>合計残業時間</th>
+                </tr>
+                <tr>
+                    <td><%= "#{@total_worktime}h" %></td>
+                    <td><%= "#{@total_overtime}h" %></td>
+                </tr>
+            </table>
+        </div>
     </div>
-    <div class="timetable">
-    <input type="submit" value="csv出力">
-    </div>
-  </div>
 </div>

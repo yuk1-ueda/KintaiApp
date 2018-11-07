@@ -106,3 +106,26 @@
     font-size: 24px;
     opacity: 0.5;
   }
+
+  .timetable_search select {
+    background-color: white;
+      border: 1px solid #d8dadf;
+      color: #57575f;
+      font-weight: 300;
+      font-size: 16px;
+      width: 120px;
+      height: 40px;
+      border-radius: 4px;
+      margin: auto;
+  }
+
+  .timetable_search input[type="submit"] {
+    background-color: #286aa4;
+    color: white;
+    cursor: pointer;
+    font-weight: 300;
+    width: 120px;
+    border-radius: 4px;
+    margin: auto;
+    margin-left: 120px;
+  }

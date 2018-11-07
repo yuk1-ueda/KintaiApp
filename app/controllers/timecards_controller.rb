@@ -16,7 +16,9 @@ class TimecardsController < ApplicationController
 
     if @timecard.save
       flash[:notice] = "出勤打刻が完了しました"
-      redirect_to("/timetable")
+      @onetime_year = Time.now.year
+      @onetime_month = Time.now.month
+      redirect_to("/timetable?date=#{@onetime_year}-#{@onetime_month}-01")
     else
       flash[:notice] = "出勤打刻が失敗しました"
       render("timecards/new")
@@ -33,7 +35,9 @@ class TimecardsController < ApplicationController
 
     if @timecard.save
       flash[:notice] = "退勤打刻が完了しました"
-      redirect_to("/timetable")
+      @onetime_year = Time.now.year
+      @onetime_month = Time.now.month
+      redirect_to("/timetable?date=#{@onetime_year}-#{@onetime_month}-01")
     else
       flash[:notice] = "退勤打刻が失敗しました"
       render("timecards/new")
