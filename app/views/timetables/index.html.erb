@@ -56,7 +56,9 @@
         </div>
 
         <div class="timetable">
-            <%= link_to "CSV出力", timetable_path(format: :csv, date: "2018-11-01") %>
+            <div class="csv_btn">
+                <%= link_to "CSV出力", timetable_path(format: :csv, date: params[:date]) %>
+            </div>
         </div>
     </div>
 </div>
