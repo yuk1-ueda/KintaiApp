@@ -26,13 +26,29 @@ CSV.generate do |csv|
             @csv_worktime = nil
         end
 
+        if value[:breaktime]
+            @csv_breaktime_hour = value[:breaktime] / 1
+            @csv_breaktime_min = value[:breaktime] % 1 * 60
+            @csv_breaktime = "#{@csv_breaktime_hour.floor}時間#{@csv_breaktime_min.floor}分"
+        else
+            @csv_breaktime = nil
+        end
+
+        if value[:overtime]
+            @csv_overtime_hour = value[:overtime] / 1
+            @csv_overtime_min = value[:overtime] % 1 * 60
+            @csv_overtime = "#{@csv_overtime_hour.floor}時間#{@csv_overtime_min.floor}分"
+        else
+            @csv_overtime = nil
+        end
+
         csv_column_values = [
             time,
             @csv_startofwork,
             @csv_endofwork,
             @csv_worktime,
-            value[:breaktime],
-            value[:overtime]
+            @csv_breaktime,
+            @csv_overtime
         ]
         csv << csv_column_values
     end

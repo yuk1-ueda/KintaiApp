@@ -28,7 +28,7 @@ before_action :authenticate_user
       timetables[time][:endofwork] = @endofwork
 
       # earlytime=10:00前の労働時間
-      @ten_oclock = ("#{time.year}/#{time.month}/#{time.day} 10:00:00")
+      @ten_oclock = Time.parse("#{time.year}/#{time.month}/#{time.day} 10:00:00")
       if @startofwork && @startofwork < @ten_oclock
         @earlytime = TimeDifference.between(@startofwork, @ten_oclock).in_hours
       else
@@ -38,10 +38,11 @@ before_action :authenticate_user
 
       # gaptime=出勤時間と退勤時間の差
       if @startofwork && @endofwork && @earlytime
-        @gaptime = TimeDifference.between(@startofwork, @endofwork).in_hours
-        @gaptime = @gaptime - @earlytime
+        @kousokutime = TimeDifference.between(@startofwork, @endofwork).in_hours
+        @gaptime = @kousokutime - @earlytime
       elsif @startofwork && @endofwork
-        @gaptime = TimeDifference.between(@startofwork, @endofwork).in_hours
+        @kousokutime = TimeDifference.between(@startofwork, @endofwork).in_hours
+        @gaptime = @kousokutime
       else
         @gaptime = nil
       end
@@ -97,5 +98,6 @@ before_action :authenticate_user
     end
     total_overtime
   end
+
 
 end

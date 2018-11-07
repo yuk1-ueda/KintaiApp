@@ -35,7 +35,7 @@
                     <td><% if value[:endofwork] %><%= value[:endofwork].strftime("%H:%M") %><% else %><%= nil %><% end %></td>
                     <td><% if value[:worktime] %><%= "#{value[:worktime].floor(2).to_f}h" %><% else %><%= nil %><% end %></td>
                     <td><% if value[:breaktime] %><%= "#{value[:breaktime]}h" %><% else %><%= nil %><% end %></td>
-                    <td><% if value[:overtime] && value[:worktime] %><%= "#{value[:overtime].floor(2).to_f}h" %><% end %></td>
+                    <td><% if value[:overtime] && value[:worktime] %><%= "#{value[:overtime].floor(2).to_f}h" %><% else %><%= nil %><% end %></td>
                 </tr>
                 <% end %>
             </table>
@@ -49,10 +49,14 @@
                     <th>合計残業時間</th>
                 </tr>
                 <tr>
-                    <td><%= "#{@total_worktime}h" %></td>
-                    <td><%= "#{@total_overtime}h" %></td>
+                    <td><%= "#{@total_worktime.floor(2).to_f}h" %></td>
+                    <td><%= "#{@total_overtime.floor(2).to_f}h" %></td>
                 </tr>
             </table>
+        </div>
+
+        <div class="timetable">
+            <%= link_to "CSV出力", timetable_path(format: :csv, date: "2018-11-01") %>
         </div>
     </div>
 </div>
