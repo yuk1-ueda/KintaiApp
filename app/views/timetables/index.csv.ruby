@@ -7,13 +7,13 @@ CSV.generate do |csv|
     @timetables.each do |time, value|
 
         if value[:startofwork]
-            @csv_startofwork = value[:startofwork].strftime("%H時%M分")
+            @csv_startofwork = value[:startofwork].strftime("%H:%M")
         else
             @csv_startofwork = nil
         end
 
         if value[:endofwork]
-            @csv_endofwork = value[:endofwork].strftime("%H時%M分")
+            @csv_endofwork = value[:endofwork].strftime("%H:%M")
         else
             @csv_endofwork = nil
         end
@@ -21,7 +21,7 @@ CSV.generate do |csv|
         if value[:worktime]
             @csv_worktime_hour = value[:worktime] / 1
             @csv_worktime_min = value[:worktime] % 1 * 60
-            @csv_worktime = "#{@csv_worktime_hour.floor}時間#{@csv_worktime_min.floor}分"
+            @csv_worktime = "#{@csv_worktime_hour.floor}:#{@csv_worktime_min.floor}"
         else
             @csv_worktime = nil
         end
@@ -29,7 +29,7 @@ CSV.generate do |csv|
         if value[:breaktime]
             @csv_breaktime_hour = value[:breaktime] / 1
             @csv_breaktime_min = value[:breaktime] % 1 * 60
-            @csv_breaktime = "#{@csv_breaktime_hour.floor}時間#{@csv_breaktime_min.floor}分"
+            @csv_breaktime = "#{@csv_breaktime_hour.floor}:#{@csv_breaktime_min.floor}"
         else
             @csv_breaktime = nil
         end
@@ -37,7 +37,7 @@ CSV.generate do |csv|
         if value[:overtime]
             @csv_overtime_hour = value[:overtime] / 1
             @csv_overtime_min = value[:overtime] % 1 * 60
-            @csv_overtime = "#{@csv_overtime_hour.floor}時間#{@csv_overtime_min.floor}分"
+            @csv_overtime = "#{@csv_overtime_hour.floor}:#{@csv_overtime_min.floor}:"
         else
             @csv_overtime = nil
         end
